@@ -24,7 +24,7 @@ if [[ "$CONFIRMATION" == "y" ]] || [[ "$CONFIRMATION" == "Y" ]]; then
         -e "s/\[DNS_TOKEN\]/$DNS_TOKEN/g" \
         -e "s/\[HOST_FQDN\]/$HOST_FQDN/g" \
         -e "s/\[HOSTNAME\]/$HOSTNAME/g" \
-        -e "s/\[AUTH_HASH\]/$AUTH_HASH/g" \
+        -e "s/\[DASHBOARD_AUTH_HASH\]/$AUTH_HASH/g" \
         -e "s/\[SETUP_PATH\]/$SETUP_PATH/g" \
         "./docker-compose-template.yml" > "./docker-setup/docker-compose.yml";
 
@@ -32,11 +32,13 @@ if [[ "$CONFIRMATION" == "y" ]] || [[ "$CONFIRMATION" == "Y" ]]; then
         -e "s/\[DNS_TOKEN\]/$DNS_TOKEN/g" \
         -e "s/\[HOST_FQDN\]/$HOST_FQDN/g" \
         -e "s/\[HOSTNAME\]/$HOSTNAME/g" \
-        -e "s/\[AUTH_HASH\]/$AUTH_HASH/g" \
+        -e "s/\[DASHBOARD_AUTH_HASH\]/$AUTH_HASH/g" \
         -e "s/\[SETUP_PATH\]/$SETUP_PATH/g" \
         "./traefik-template.yml" > "./docker-setup/traefik/config/traefik.yml";
 
     echo "Created config YAML; Composing..."
+
+    chmod 0600 ./docker-setup/traefik/config/acme.json
     docker network create traefik-proxy
     docker-compose up -d -f ./docker-setup/docker-compose.yml
 
