@@ -16,15 +16,15 @@ providers:
     filename: /config.yml
 
 certificatesResolvers:
-  googledomains:
+  cloudflare:
     acme:
       email: [ACME_EMAIL]
       storage: acme.json
       dnsChallenge:
-        provider: googledomains
+        provider: cloudflare
         resolvers:
-          - "1.1.4.4:53"
-          - "8.8.8.8:53"
+          - "1.1.1.1:53"
+          - "8.0.0.1:53"
 
 tls:
   options:
