@@ -13,7 +13,7 @@ services:
     networks:
       - traefik-proxy
     environment:
-      - GOOGLE_DOMAINS_ACCESS_TOKEN=[DNS_TOKEN]
+      - CF_DNS_API_TOKEN=[DNS_TOKEN]
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - /var/run/docker.sock:/var/run/docker.sock:ro
@@ -31,7 +31,7 @@ services:
       - "traefik.http.routers.traefik-secure.rule=Host(`traefik.[HOST_FQDN]`)"
       - "traefik.http.routers.traefik-secure.middlewares=traefik-auth"
       - "traefik.http.routers.traefik-secure.tls=true"
-      - "traefik.http.routers.traefik-secure.tls.certresolver=googledomains"
+      - "traefik.http.routers.traefik-secure.tls.certresolver=cloudflare"
       - "traefik.http.routers.traefik-secure.tls.domains[0].main=[HOST_FQDN]"
       - "traefik.http.routers.traefik-secure.tls.domains[0].sans=*.[HOST_FQDN]"
       - "traefik.http.routers.traefik-secure.service=api@internal"
