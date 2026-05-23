@@ -1,15 +1,16 @@
-version: '3.9'
+# Base Docker Host Setup Config
 
 services:
   traefik:
     image: traefik:latest
     container_name: traefik
     restart: unless-stopped
+    pull_policy: always
     security_opt:
       - no-new-privileges:true
     ports:
-      - 80:80
-      - 443:443
+      - "0.0.0.0:80:80"
+      - "0.0.0.0:443:443"
     networks:
       - traefik-proxy
     environment:
@@ -40,6 +41,7 @@ services:
     image: portainer/portainer-ce:latest
     container_name: portainer
     restart: unless-stopped
+    pull_policy: always
     networks:
       - traefik-proxy
     volumes:
